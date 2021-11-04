@@ -1,4 +1,5 @@
 import speech_recognition as sr
+from speech_recognition.calculator import *
 
 r = sr.Recognizer()
 m = sr.Microphone()
@@ -19,7 +20,16 @@ try:
             if str is bytes:  # this version of Python uses bytes for strings (Python 2)
                 print(u"You said {}".format(value).encode("utf-8"))
             else:  # this version of Python uses unicode for strings (Python 3+)
+                if value.lower() == "stop":
+                    print("You said doe maar {}".format(value))
+                    break
+                ## Calculate
                 print("You said {}".format(value))
+                tidy_eq, result = calculate(value)
+                if result == None:
+                    print("Could not calculate")
+                else:
+                    print(f"{tidy_eq} = {result}")
         except sr.UnknownValueError:
             print("Oops! Didn't catch that")
         except sr.RequestError as e:
