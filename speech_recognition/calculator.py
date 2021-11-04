@@ -1,28 +1,3 @@
-# # import sys
-# cnt = 0
-# while True:
-#   if cnt == 5:
-#     print("That's enough for today, bye!")
-#     # sys.exit()
-#     break
-#   print("What do you want to do?")
-#   operation = input("Type '+' for addition,\n'-' for subtraction,\n'*' for multiplication,\nor '/' for division.\nType 'q' to quit.\n")
-#   if operation == 'q':
-#     print("Bye!!")
-#     # sys.exit()
-#     break
-#   elif operation == '+' or operation == '-' or operation == '*' or operation == '/':
-#     a = input("First number: ")
-#     b = input("Second number: ")
-#     while not (a.isnumeric() and b.isnumeric()):
-#       print("Input must be two numbers")
-#       a = input("First number: ")
-#       b = input("Second number: ")
-#     print(f"{a} {operation} {b} = {eval(str(a)+operation+str(b))}")
-#     cnt += 1
-#   else:
-#     print("Please choose one of the given operations")
-
 ## imports/installs: pyaudio
 
 
@@ -30,13 +5,38 @@
 
 ### To do: check all possibilities and see what needs tidying
 
+import numpy as np
+import re
+
 def tidy(eq):
     eq = eq.lower()
+    # print(eq)
+    ## million
+    # print((" million" in eq))
+    if "open" in eq:
+        eq = eq.replace("open", "(")
+    if "close" in eq:
+        eq = eq.replace("close", ")")
+    if " million" in eq:
+        eq = eq.replace(" million", "000000")
+        print(eq)
+    if "√" in eq:
+        # print(eq)
+        eq = re.sub(r"√\s?(\d+)", r"np.sqrt(\1)", eq)
+        # print(eq)
+    if "x" in eq:
+        eq = eq.replace("x", "*")
+    if "^" in eq:
+        eq = eq.replace("^", "**")
+    if "to the power" in eq:
+        eq = re.sub(r"to the power( of)?", r"**", eq)
     ## Remove spaces
+    eq = eq.replace(" ", "")
     return eq
 
 def calculate(equation):
     eq = tidy(equation)
+    # print(eq)
     try:
         res = eval(eq)
     except:
