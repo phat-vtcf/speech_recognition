@@ -1,5 +1,5 @@
 import speech_recognition as sr
-from calculator import *
+from speech_recognition.calculator import *
 
 r = sr.Recognizer()
 m = sr.Microphone()
