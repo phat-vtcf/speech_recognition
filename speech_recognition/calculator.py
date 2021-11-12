@@ -35,6 +35,8 @@ def tidy(eq):
     if "to the power" in eq:
         eq = re.sub(r"to the power( of)?", r"**", eq)
     ## Convert log (e log) to numpy.log so that it can be evaluated
+    if "lock" in eq:
+        eq = eq.replace("lock", "log")
     if "log" in eq:
         ## Check for brackets first
         eq = re.sub(r"log\s?\((.+)\)", r"np.log(\1)", eq)
